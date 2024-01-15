@@ -1,0 +1,12 @@
+.body{
+   
+    align-items: center;
+    background-color: aqua;
+}
+
+.col{
+
+    align-self: center;
+    padding: 30px;
+   
+}
