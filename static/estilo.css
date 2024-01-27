@@ -1,7 +1,40 @@
 .body{
    
+    display: flex;
+    flex-direction: column;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+nav{
+    background-image:linear-gradient(90deg, #ffffff36 0%, #ffffff36 49%, #ffffff36 100%), url(carnesRojas.jpeg);
+    padding: 15px 20px 15px 20px;
+}
+
+.principal{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    padding-top: 20px;
+}
+
+.botoncobro{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 15px;
+}
+
+.ventas{
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    background-color: aqua;
+    justify-content: flex-start;
+    padding: 0 35px 0 0;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
 }
 
 .col{
@@ -10,3 +43,100 @@
     padding: 30px;
    
 }
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;}
+
+.productosLista{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.itemP, .tittle{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.nombre{
+    width: 100%;
+
+}
+
+.cantidad{
+    width: 100%;
+}
+
+.precio{
+    width: 100%;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.mainReport{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.boxOne, .boxTwo{
+    display: flex;
+    gap: 15px;
+}
+
+.boxPapi{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 15px 30px 15px 30px;
+}
+
+.boxes{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #e6e6e6;
+    padding: 10px 20px;
+    border-radius: 10px;
+    gap: 15px;
+}
+
+.sectionProductosPro{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.encabezadoProductos{
+    display: flex;
+    justify-content: center;
+}
+
+.listaproductosPro{
+    display: flex;
+    flex-direction: column;
+}
+
+.mi-formulario {
+    width: 300px; /* Ajusta el ancho según tus necesidades */
+    margin: 0 auto; /* Centra el formulario en la página */
+  }
+  
+  .mi-boton {
+    background-color: #4CAF50; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    padding: 10px 15px; /* Ajusta el espaciado interno del botón */
+    border: none; /* Elimina el borde del botón */
+    border-radius: 5px; /* Agrega esquinas redondeadas al botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  }
+  
+  .mi-boton:hover {
+    background-color: #45a049; /* Cambia el color de fondo al pasar sobre el botón */
+  }
+  

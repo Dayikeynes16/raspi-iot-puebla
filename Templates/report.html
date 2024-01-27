@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %} {% block content %}
+ <main class="mainReport">
+    <section class="encabezado">
+        
+        <div class="boxPapi">
+            <div class="boxes">  <h3>Venta total:</h3> <h3>{{total}}</h3> </div>
+            <div class="boxes">  <h3>Venta con efectivo:</h3>  <h3>{{efectivo}}</h3></div>
+            <div class="boxes">  <h3>Venta con tarjeta:</h3>  <h3>{{card}}</h3> </div>
+            <div class="boxes">  <h3>Venta con transferencia:</h3> <h3>{{spei}}</h3> </div>
+        </div>
+
+    </section>
+    <section class="sectionProductosPro">
+        <div class="encabezadoProductos">
+            <h2>Lista de Productos</h2>
+        </div>
+        <div class="listaProductosPro">
+            {% for ventas in ventas %}
+            <div class="hcew"> venta {{ventas.id_venta}} -- {{ventas.total}} -- {{ventas.metodo_de_pago}}  </div>
+            
+            {% endfor %}
+        </div>
+    </section>
+ </main>
+
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %} {% block content %}
+
+    <main class="principal">
+        <section class="ventas">
+        
+            <h2>Pedidos</h2>
+            <div class="pedidosN">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <select name="producto" id="">
+                    {% for i in productos %}
+                        
+                        <option value="{{i.codigo}}"> {{i.nombre}}</option>
+                    {% endfor %}   
+                    </select>
+                    <label>Introduzca el peso en kg </label>
+                    <input name ='peso' type="decimal">
+                    
+                    <button type="submit">Enviar</button>
+                </form>
+<br>
+                <form action="/agregar_producto/" method="post">
+                    {% csrf_token %}
+                    <label for="codigo_barras">Código de Barras:</label>
+                    <input type="text" id="codigo_barras" name="codigo_barras" required, autofocus>
+                    <button type="submit">Agregar Producto</button>
+                </form>
+                
+            </div>
+        </section>
+        <section class="items">
+            <h2>Productos</h2>
+            <table class="table table-borderless">
+                 <thead>
+                    <tr>
+                        <th scope="col">producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto_venta in productos_venta %}
+                    <tr>
+                        <td>{{ producto_venta.producto.nombre }}</td>
+                        <td>{{ producto_venta.cantidad }}</td>
+                        <td>{{ producto_venta.subtotal }}</td>
+                        <td> 
+                            <form action="{% url 'delete_product' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ producto_venta.id }}">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        
+        </section>
+        <section class="cobro">
+
+            <form method="POST" action="/finalizar_venta_barras/">
+                {% csrf_token %}
+                <h1>Total: {{venta_activa.total}} </h1>
+                <input  type="hidden" name="id_venta"  value="{{venta_activa.id_venta}}">
+                <select name="metodo_de_pago" class="form-select" aria-label="Método de Pago">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                    <option value="transferencia">Transferencia</option>
+                </select>
+                <div class="botoncobro">
+                <button type="submit" class="btn btn-danger btn-block">Cobrar</button>
+            </form>
+        </div>
+
+       
+
+        
+        </section>
+    </main>
+    
+    <script src="/static/javascript.js"></script>
+    {% endblock %}
