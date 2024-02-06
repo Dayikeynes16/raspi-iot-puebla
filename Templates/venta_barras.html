@@ -5,25 +5,26 @@
         
             <h2>Pedidos</h2>
             <div class="pedidosN">
-                <form action="" method="post">
+                <form class="form-control" action="" method="post">
                     {% csrf_token %}
-                    <select name="producto" id="">
+                    <select  class="form-select" name="producto" id="">
                     {% for i in productos %}
                         
                         <option value="{{i.codigo}}"> {{i.nombre}}</option>
                     {% endfor %}   
                     </select>
                     <label>Introduzca el peso en kg </label>
-                    <input name ='peso' type="decimal">
-                    
-                    <button type="submit">Enviar</button>
+                    <input class="form-control" name ='peso' type="decimal">
+                    <br>
+                    <button class="btn btn-warning" type="submit">Enviar</button>
                 </form>
 <br>
-                <form action="/agregar_producto/" method="post">
+                <form class="form-control" action="/agregar_producto/" method="post">
                     {% csrf_token %}
                     <label for="codigo_barras">Código de Barras:</label>
-                    <input type="text" id="codigo_barras" name="codigo_barras" required, autofocus>
-                    <button type="submit">Agregar Producto</button>
+                    <input class="form-control" type="text" id="codigo_barras" name="codigo_barras" required, autofocus>
+                    <br>
+                    <button class="btn btn-warning" type="submit">Agregar Producto</button>
                 </form>
                 
             </div>

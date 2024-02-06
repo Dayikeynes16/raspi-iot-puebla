@@ -1,4 +1,20 @@
+document.getElementById('imprimirBtn').addEventListener('click', function() {
+  imprimirTicket();
+});
 
+function imprimirTicket() {
+  var contenidoTicket = "<h1>¡Mi Ticket!</h1><p>Fecha: " + new Date() + "</p><p>Artículo: Producto XYZ</p><p>Precio: $10.00</p>";
+
+  var ventana = window.open('', '', 'width=500,height=500');
+  ventana.document.open();
+  ventana.document.write('<html><head><title>Ticket</title></head><body>');
+  ventana.document.write(contenidoTicket);
+  ventana.document.write('</body></html>');
+  ventana.document.close();
+
+  ventana.print();
+  ventana.close();
+}
 
 function toggleProductos(idPro){
     

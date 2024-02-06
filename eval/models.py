@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
 
 
 
@@ -16,7 +15,7 @@ class Producto(models.Model):
 
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
-    operador = models.IntegerField(null=True, default = 2)
+    operador = models.IntegerField(null=True)
     fecha = models.DateTimeField(auto_now_add=True)
     finalizada = models.BooleanField(default=False)
     total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00)
@@ -38,16 +37,3 @@ class ProductoVenta(models.Model):
 
 
 
-
-# Create your models here.
-
-class Task(models.Model):
-  title = models.CharField(max_length=200)
-  description = models.TextField(max_length=1000)
-  created = models.DateTimeField(auto_now_add=True)
-  datecompleted = models.DateTimeField(null=True, blank=True)
-  important = models.BooleanField(default=False)
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-  def __str__(self):
-    return self.title + ' - ' + self.user.username
