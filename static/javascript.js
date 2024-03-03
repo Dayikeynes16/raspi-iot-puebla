@@ -17,7 +17,7 @@ function imprimirTicket() {
 }
 
 function toggleProductos(idPro){
-    
+     
     var listaProductos = document.getElementById(idPro).value;
     listaProductos = listaProductos.replace( /[<>'"]/g, '');
     listaProductos = listaProductos.replace(/(ProductoVenta:)/g, '')
@@ -47,7 +47,8 @@ function toggleProductos(idPro){
           // Agrega el producto al array de productos
           productos.push(producto);
       });
-
+  
+ 
   var total = 0
 
   for (var i = 0; i < productos.length; i++) {
@@ -88,4 +89,18 @@ function toggleProductos(idPro){
 
     document.getElementById('inputCobro').value = productos[0].nVenta;
     document.getElementById('inputCancelar').value = productos[0].nVenta;
+    document.getElementById('inputdescuento').value = productos[0].nVenta;
+
+
 }
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById('toggleButton').addEventListener('click', function() {
+      var form = document.getElementById('discountForm');
+      if (form.style.display === 'none' || form.style.display === '') {
+          form.style.display = 'block';
+      } else {
+          form.style.display = 'none';
+      }
+  });
+});
+

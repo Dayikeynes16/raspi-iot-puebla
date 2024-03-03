@@ -35,5 +35,20 @@ class ProductoVenta(models.Model):
         return f" {self.producto.nombre} ({self.cantidad}) ({self.venta}) ({self.subtotal})"
 
 
+class Cliente(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=255, null=True, blank=True)
+    telefono = models.CharField(max_length = 100,null = True, blank = True)
 
+    def __str__(self):
+        return self.nickname - self.name
+    
+class PrecioEspecial(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    precio_especial = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return f"{self.producto.nombre} - {self.cliente.nickname}: {self.precio_especial}"

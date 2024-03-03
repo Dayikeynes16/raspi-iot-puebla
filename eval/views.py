@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from Metricas.settings import os
 from decimal import Decimal
-from .models import Producto, ProductoVenta, Venta
+from .models import Producto, ProductoVenta, Venta, Cliente, PrecioEspecial
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 
 @login_required
 def hello(request):
+    clientes = Cliente.objects.all()
     ventas = Venta.objects.filter(finalizada=False, abierta = False)
     listaVentas = {}
     productos_venta = ProductoVenta.objects.filter(venta__in=ventas)
@@ -26,9 +27,8 @@ def hello(request):
         for j in productos_venta:
             if i == j.venta:
                 listaVentas[idP].append(j)
-    print(productos_venta)
                   
-    context = {'ventas': listaVentas}
+    context = {'ventas': listaVentas,'clientes':clientes}
     return render(request, 'cuestionariopart1.html', context)
 
 def check (request):
@@ -79,6 +79,7 @@ def eliminar_venta(request):
     if request.method == 'POST':
         id = request.POST.get('id_venta')
         id = int(id)
+        print('la venta eliminada fue la numero: ',id)
         venta = get_object_or_404(Venta, id_venta=id)
         venta.delete()
 
@@ -198,3 +199,60 @@ def signin(request):
 
         login(request, user)
         return redirect('hello')
+
+
+def clientes(request):
+    if request.method == 'POST':
+        fullname = request.POST.get('name')
+        nickname = request.POST.get('nickname')
+        telefono = request.POST.get('telefono')
+        adress = request.POST.get('address')
+        cliente = Cliente(name = fullname, nickname = nickname, telefono = telefono, direccion = adress)
+        cliente.save()
+    return render (request,'clientes.html')
+
+def discount(request):
+    clientes = Cliente.objects.all()
+    products = Producto.objects.all()
+    if request.method == 'POST':
+        cliente_id = request.POST.get('cliente')
+        producto_id = request.POST.get('producto')
+        precio = Decimal(request.POST.get('precio')) 
+
+        cliente = Cliente.objects.get(id=cliente_id)  
+        producto = Producto.objects.get(codigo=producto_id) 
+
+        PEspecial = PrecioEspecial(cliente=cliente, producto=producto, precio_especial=precio)
+        PEspecial.save()
+        return redirect('discount')
+    context = { 'clientes':clientes, 'products':products }
+    return render (request,'descuentos.html',context)
+
+def descuento(request):
+    if request.method == 'POST':
+        id_venta = request.POST.get('id_venta')
+        id_cliente = request.POST.get('cliente')
+        
+        venta = get_object_or_404(Venta, id_venta=id_venta)
+        cliente = get_object_or_404(Cliente, id=id_cliente)
+        
+        productos_venta = ProductoVenta.objects.filter(venta=venta)
+        
+        for producto_venta in productos_venta:
+            try:
+                precio_especial = PrecioEspecial.objects.get(cliente=cliente, producto=producto_venta.producto)
+                producto_venta.subtotal = producto_venta.cantidad * precio_especial.precio_especial
+                producto_venta.save()
+            except PrecioEspecial.DoesNotExist:
+               
+                continue
+        
+     
+        total_actualizado = sum(pv.subtotal for pv in ProductoVenta.objects.filter(venta=venta))
+        venta.total = total_actualizado
+        venta.save()
+        
+        return redirect('hello') 
+
+        
+

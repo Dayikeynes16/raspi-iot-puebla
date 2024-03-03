@@ -1,0 +1,54 @@
+{% extends 'base.html' %} 
+{% block content %}
+<main class="principal">
+        <section class="ventas">
+            <form action="" method="post">
+                {% csrf_token %}
+                <label for="">Cliente</label>
+                <select class="form-select" name="cliente" id="">
+                    {% for i in clientes %}
+                        <option value={{i.id}}>{{i.name}}</option>
+                    {% endfor %}
+                </select>
+                <label for="">Escoja el producto</label>
+                <select class="form-select" name="producto" id="">
+                    {% for i in products %}
+                        <option value={{i.codigo}}>{{i.nombre}}</option>
+                    {% endfor %}
+                </select>
+                <label for="">Ingrese el precio preferencial</label>
+                <input name="precio" value="" class="form-control" type="number">
+                <button type="submit" class="btn btn-outline-primary" >Aplicar</button>
+            </form>
+        </section>
+        <section class="items">
+            
+            <table class="table table-borderless">
+                <thead >
+                    <th>Cliente</th>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Telefono</th>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr>
+                        <td>{{cliente.name}}</td>
+                        <td>{{cliente.nickname}}</td>
+                        <td>{{cliente.direccion}}</td>
+                        <td>{{cliente.telefono}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </section>
+        <section class="cobro">
+            <p>Dar de alta a un cliente nuevo</p>
+            <a class="btn btn-light" type="button" href="/clientes/">Nuevo</a>
+        </section>
+       
+</main>
+ 
+
+{% endblock %}
